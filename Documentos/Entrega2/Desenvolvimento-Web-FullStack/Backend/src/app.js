@@ -12,7 +12,10 @@ const app = express();
 
 // Configuração correta e única do CORS
 app.use(cors({
-  origin: 'https://tech-food-one.vercel.app'
+  origin: [
+    'https://tech-food-one.vercel.app', 
+    'https://tech-food-fzzp9v4u5-fabrizzioputtinis-projects.vercel.app'
+  ]
 }));
 
 app.use(express.json());
