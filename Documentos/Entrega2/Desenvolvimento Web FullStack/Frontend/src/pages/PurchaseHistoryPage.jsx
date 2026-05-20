@@ -17,7 +17,7 @@ export default function PurchaseHistoryPage() {
   const loadPurchases = async () => {
     try {
       setLoading(true);
-      const response = await fetch('http://localhost:3000/api/pedidos', {
+      const response = await fetch('api/pedidos', {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`,
         },

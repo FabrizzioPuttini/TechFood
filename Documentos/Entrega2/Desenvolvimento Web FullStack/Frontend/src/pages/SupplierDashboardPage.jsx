@@ -41,7 +41,7 @@ export default function SupplierDashboardPage() {
       setLoading(true);
       const [produtosData, categoriasRes] = await Promise.all([
         getProdutos(),
-        fetch('http://localhost:3000/api/categorias').then(r => r.json()),
+        fetch('api/categorias').then(r => r.json()),
       ]);
       setProdutos(produtosData);
       setCategories(categoriasRes);
@@ -81,7 +81,7 @@ export default function SupplierDashboardPage() {
         fd.append('imagem', imagem);
       }
 
-      const response = await fetch('http://localhost:3000/api/produtos', {
+      const response = await fetch('/api/produtos', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`,
@@ -109,7 +109,7 @@ export default function SupplierDashboardPage() {
     }
 
     try {
-      const response = await fetch(`http://localhost:3000/api/produtos/${idProduto}`, {
+      const response = await fetch(`/api/produtos/${idProduto}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`,
@@ -148,7 +148,7 @@ export default function SupplierDashboardPage() {
     }
 
     try {
-      const response = await fetch(`http://localhost:3000/api/produtos/${editingProduto.idProduto}`, {
+      const response = await fetch(`/api/produtos/${editingProduto.idProduto}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

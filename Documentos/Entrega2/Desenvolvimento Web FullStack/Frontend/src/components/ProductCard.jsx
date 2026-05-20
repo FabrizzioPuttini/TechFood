@@ -6,7 +6,7 @@ export default function ProductCard({ product, onAddCart }) {
   const emEstoque = (product.estoque || 0) > 0;
   const preco = parseFloat(product.preco || 0);
   const imagemUrl = product.imagem
-    ? `http://localhost:3000/uploads/${product.imagem}`
+    ? `uploads/${product.imagem}`
     : null;
 
   return (

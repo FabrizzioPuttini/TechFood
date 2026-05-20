@@ -45,7 +45,7 @@ export default function CartPage() {
             <div className="bg-white rounded-lg border border-marketplace-cream shadow-sm">
               {items.map((item) => {
                 const imagemUrl = item.imagem
-                  ? `http://localhost:3000/uploads/${item.imagem}`
+                  ? `uploads/${item.imagem}`
                   : null;
 
                 return (
