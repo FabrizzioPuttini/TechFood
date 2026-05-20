@@ -1,7 +1,8 @@
 import axios from 'axios';
 
-const API_URL = import.meta.env.VITE_API_URL || '/api';
-export const UPLOADS_URL = import.meta.env.VITE_UPLOADS_URL || 'http://localhost:3000';
+const API_URL = import.meta.env.VITE_API_URL || 'https://tech-food-s621.vercel.app/api';
+export const UPLOADS_URL =
+  import.meta.env.VITE_UPLOADS_URL || 'https://tech-food-s621.vercel.app';
 
 const api = axios.create({
   baseURL: API_URL,

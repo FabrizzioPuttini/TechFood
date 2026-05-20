@@ -13,7 +13,7 @@ Interface web do TechFood. Consome a API REST do `Backend/` com autenticação J
 ## Pré-requisitos
 
 - Node.js 18+
-- O **Backend** rodando em `http://localhost:3000`
+- O **Backend** rodando em `https://tech-food-s621.vercel.app`
 
 ## Como rodar
 
@@ -29,8 +29,8 @@ App em `http://localhost:5173`.
 
 | Variável | Descrição | Padrão |
 |---|---|---|
-| `VITE_API_URL` | URL base da API | `http://localhost:3000/api` |
-| `VITE_UPLOADS_URL` | URL para imagens estáticas | `http://localhost:3000` |
+| `VITE_API_URL` | URL base da API | `https://tech-food-s621.vercel.app/api` |
+| `VITE_UPLOADS_URL` | URL para imagens estáticas | `https://tech-food-s621.vercel.app` |
 
 ## Estrutura
 

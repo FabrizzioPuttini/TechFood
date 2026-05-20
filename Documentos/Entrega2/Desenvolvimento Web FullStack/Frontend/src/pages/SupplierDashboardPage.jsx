@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext.jsx';
 import { useToast } from '../contexts/ToastContext.jsx';
+import api from '../api/client.js';
 import { getProdutos } from '../api/productsApi.js';
 
 export default function SupplierDashboardPage() {
@@ -41,10 +42,10 @@ export default function SupplierDashboardPage() {
       setLoading(true);
       const [produtosData, categoriasRes] = await Promise.all([
         getProdutos(),
-        fetch('api/categorias').then(r => r.json()),
+        api.get('/categorias'),
       ]);
       setProdutos(produtosData);
-      setCategories(categoriasRes);
+      setCategories(categoriasRes.data);
     } catch (err) {
       console.error('Erro ao carregar dados:', err);
       toast.error('Erro ao carregar dados');
@@ -81,25 +82,15 @@ export default function SupplierDashboardPage() {
         fd.append('imagem', imagem);
       }
 
-      const response = await fetch('/api/produtos', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`,
-        },
-        body: fd,
-      });
-
-      if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.error || 'Erro ao criar produto');
-      }
+      await api.post('/produtos', fd);
 
       showMessage('Produto publicado com sucesso!', 'success');
       setFormData({ titulo: '', idCategoria: '', descricao: '', preco: '', estoque: '' });
       setImagem(null);
       loadData();
     } catch (err) {
-      showMessage(err.message, 'error');
+      const message = err.response?.data?.error || 'Erro ao criar produto';
+      showMessage(message, 'error');
     }
   };
 
@@ -109,22 +100,13 @@ export default function SupplierDashboardPage() {
     }
 
     try {
-      const response = await fetch(`/api/produtos/${idProduto}`, {
-        method: 'DELETE',
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`,
-        },
-      });
-
-      if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.error || 'Erro ao deletar produto');
-      }
+      await api.delete(`/produtos/${idProduto}`);
 
       showMessage('Produto deletado com sucesso!', 'success');
       loadData();
     } catch (err) {
-      showMessage(err.message, 'error');
+      const message = err.response?.data?.error || 'Erro ao deletar produto';
+      showMessage(message, 'error');
     }
   };
 
@@ -148,31 +130,20 @@ export default function SupplierDashboardPage() {
     }
 
     try {
-      const response = await fetch(`/api/produtos/${editingProduto.idProduto}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token')}`,
-        },
-        body: JSON.stringify({
-          titulo: editFormData.titulo,
-          idCategoria: parseInt(editFormData.idCategoria),
-          descricao: editFormData.descricao,
-          preco: parseFloat(editFormData.preco),
-          estoque: parseInt(editFormData.estoque) || 0,
-        }),
+      await api.put(`/produtos/${editingProduto.idProduto}`, {
+        titulo: editFormData.titulo,
+        idCategoria: parseInt(editFormData.idCategoria),
+        descricao: editFormData.descricao,
+        preco: parseFloat(editFormData.preco),
+        estoque: parseInt(editFormData.estoque) || 0,
       });
-
-      if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.error || 'Erro ao atualizar produto');
-      }
 
       showMessage('Produto atualizado com sucesso!', 'success');
       setShowEditModal(false);
       loadData();
     } catch (err) {
-      showMessage(err.message, 'error');
+      const message = err.response?.data?.error || 'Erro ao atualizar produto';
+      showMessage(message, 'error');
     }
   };
 
