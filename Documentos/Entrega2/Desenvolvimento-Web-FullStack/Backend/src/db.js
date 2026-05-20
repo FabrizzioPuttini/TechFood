@@ -9,6 +9,10 @@ export const pool = mysql.createPool({
   port: process.env.DB_PORT || 3306,
   waitForConnections: true,
   connectionLimit: 10,
+  // 👇 Linhas adicionadas para permitir a conexão segura com o TiDB Cloud 👇
+  ssl: {
+    rejectUnauthorized: true
+  }
 });
 
 export default pool;
